@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex">
-<title>Как работать с ботом рассылок</title>
-<meta property="og:title" content="Как работать с ботом рассылок">
+<title>как работать с ботом рассылок</title>
+<meta property="og:title" content="как работать с ботом рассылок">
 <meta name="description" content="Инструкция для операторов бота рассылок @sabsc_bot.">
 <style>
   :root {
@@ -45,82 +45,145 @@
     background: var(--code-bg);
     padding: 0.12em 0.35em;
     border-radius: 4px;
-    overflow-wrap: anywhere;
+    /* break-word, а не anywhere: в таблице anywhere сжимает столбец и рвёт команды посреди слова. */
+    overflow-wrap: break-word;
   }
   a { color: var(--link); }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1em; }
+  th, td { border: 1px solid var(--border); padding: 0.4em 0.6em; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 600; }
+  /* Цитата в инструкции — то, что нельзя пропустить. */
+  blockquote { margin: 0 0 1em; padding: 0.6em 0.9em; border-left: 4px solid var(--link); background: var(--code-bg); border-radius: 0 6px 6px 0; }
+  blockquote p { margin: 0; }
   /* Значок ссылки на раздел, который добавляет Markdown API GitHub: без скриптов GitHub он не работает. */
   .anchor { display: none; }
 </style>
 </head>
 <body>
 <main>
-<div class="markdown-heading"><h1 class="heading-element">Как работать с ботом рассылок</h1><a id="user-content-как-работать-с-ботом-рассылок" class="anchor" aria-label="Permalink: Как работать с ботом рассылок" href="#как-работать-с-ботом-рассылок"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
-<p>Бот — @sabsc_bot. Всё делается в личном чате с ним: команды — в меню «/» у поля ввода, решения — кнопками под сообщениями бота.</p>
-<div class="markdown-heading"><h2 class="heading-element">Начало</h2><a id="user-content-начало" class="anchor" aria-label="Permalink: Начало" href="#начало"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h1 class="heading-element">как работать с ботом рассылок</h1><a id="user-content-как-работать-с-ботом-рассылок" class="anchor" aria-label="Permalink: как работать с ботом рассылок" href="#как-работать-с-ботом-рассылок"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>бот - <a href="https://t.me/sabsc_bot" rel="nofollow">@sabsc_bot</a>. всё делается в личке с ним: команды лежат в меню <code>/</code> у поля ввода, решения - кнопками под сообщениями бота</p>
+<p>самое частое в одну строку: <code>/broadcast</code> -&gt; сообщение -&gt; получатели -&gt; "Отправить"</p>
+<blockquote>
+<p>забыли, как что работает - отправьте боту <code>/help</code>, он пришлёт ссылку на эту страницу</p>
+</blockquote>
+<div class="markdown-heading"><h2 class="heading-element">с чего начать</h2><a id="user-content-с-чего-начать" class="anchor" aria-label="Permalink: с чего начать" href="#с-чего-начать"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
 <ol>
-<li>Администратор добавляет вас оператором.</li>
-<li>Откройте @sabsc_bot и нажмите «Старт». В меню «/» появятся команды оператора. Если их нет, закройте и снова откройте чат.</li>
-<li>Эта инструкция всегда под рукой: <code>/help</code> присылает ссылку на неё.</li>
+<li>администратор добавляет вас оператором</li>
+<li>открываете @sabsc_bot и жмёте "Старт" - в меню <code>/</code> появятся команды оператора</li>
+<li>команд нет - закройте чат и откройте заново</li>
 </ol>
-<div class="markdown-heading"><h2 class="heading-element">Рассылка</h2><a id="user-content-рассылка" class="anchor" aria-label="Permalink: Рассылка" href="#рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 class="heading-element">рассылка</h2><a id="user-content-рассылка" class="anchor" aria-label="Permalink: рассылка" href="#рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
 <ol>
-<li>Отправьте <code>/broadcast</code>.</li>
-<li>Пришлите сообщение так, как написали бы его в Telegram: текст с форматированием и эмодзи, фото, видео, файл, голосовое или альбом.</li>
-<li>Напишите получателей через пробел: <code>@ник</code>, ID, <code>#группа</code> или <code>all</code> — все подписчики. Например: <code>@ivan #vip</code>.</li>
-<li>Проверьте сводку: сколько получателей и кто не подписан. Неподписанным отправьте ссылку-приглашение из сводки.</li>
-<li>Нажмите кнопку:
+<li>отправьте <code>/broadcast</code>
+</li>
+<li>пришлите сообщение так же, как написали бы его в телеграме: текст с форматированием и эмодзи, фото, видео, файл, голосовое или альбом</li>
+<li>напишите получателей через пробел, например <code>@ivan #vip</code>:
 <ul>
-<li>«Предпросмотр» — как сообщение увидят получатели;</li>
-<li>«Отправить» — сразу;</li>
-<li>«Запланировать» — к нужному времени;</li>
-<li>«Отмена».</li>
+<li>
+<code>@ник</code> или ID - конкретный человек</li>
+<li>
+<code>#группа</code> - все из группы</li>
+<li>
+<code>all</code> - все подписчики</li>
 </ul>
 </li>
-<li>После отправки придёт отчёт: сколько доставлено и почему кому-то нет.</li>
+<li>проверьте сводку: сколько получателей и кто не подписан. неподписанным скиньте ссылку-приглашение прямо из сводки</li>
+<li>нажмите кнопку:
+<ul>
+<li>"Предпросмотр" - покажет сообщение так, как его увидят получатели</li>
+<li>"Отправить" - уйдёт сразу</li>
+<li>"Запланировать" - уйдёт к нужному времени (подробнее ниже)</li>
+<li>"Отмена" - ничего не уйдёт</li>
+</ul>
+</li>
+<li>после отправки придёт отчёт: сколько доставлено и почему кому-то не дошло</li>
 </ol>
-<p>Передумали на любом шаге — отправьте <code>/cancel</code>.</p>
-<div class="markdown-heading"><h2 class="heading-element">Отложенная рассылка</h2><a id="user-content-отложенная-рассылка" class="anchor" aria-label="Permalink: Отложенная рассылка" href="#отложенная-рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>передумали на любом шаге - <code>/cancel</code></p>
+<div class="markdown-heading"><h2 class="heading-element">отложенная рассылка</h2><a id="user-content-отложенная-рассылка" class="anchor" aria-label="Permalink: отложенная рассылка" href="#отложенная-рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>после "Запланировать" выберите быстрый вариант или напишите время по москве:</p>
 <ul>
-<li>После «Запланировать» выберите быстрый вариант или напишите время по Москве: <code>18:30</code> — сегодня, <code>16.10 18:30</code> — другой день.</li>
 <li>
-<code>/scheduled</code> — все запланированные рассылки с кнопками «Предпросмотр», «Изменить время», «Отменить». Управлять ими может любой оператор.</li>
-<li>Не удаляйте исходное сообщение до отправки: без него рассылка не уйдёт, и бот об этом сообщит.</li>
+<code>18:30</code> - сегодня</li>
+<li>
+<code>16.10 18:30</code> - другой день</li>
 </ul>
-<div class="markdown-heading"><h2 class="heading-element">Группы</h2><a id="user-content-группы" class="anchor" aria-label="Permalink: Группы" href="#группы"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>все запланированные рассылки лежат в <code>/scheduled</code>, у каждой есть кнопки "Предпросмотр", "Изменить время" и "Отмена". управлять ими может любой оператор</p>
+<blockquote>
+<p>не удаляйте исходное сообщение до отправки - без него рассылка не уйдёт (бот об этом сообщит)</p>
+</blockquote>
+<div class="markdown-heading"><h2 class="heading-element">группы</h2><a id="user-content-группы" class="anchor" aria-label="Permalink: группы" href="#группы"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<table>
+<thead>
+<tr>
+<th>команда</th>
+<th>что делает</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/groups</code></td>
+<td>список групп</td>
+</tr>
+<tr>
+<td><code>/group #vip</code></td>
+<td>кто в группе</td>
+</tr>
+<tr>
+<td><code>/group #vip @anna @boris</code></td>
+<td>добавить людей в группу, если группы нет - она создастся</td>
+</tr>
+<tr>
+<td><code>/group_remove #vip @anna</code></td>
+<td>убрать человека из группы</td>
+</tr>
+<tr>
+<td><code>/group_delete #vip</code></td>
+<td>удалить группу</td>
+</tr>
+</tbody>
+</table>
+<p>в группу можно добавить по нику даже того, кто ещё не подписан - после "Старта" он начнёт получать рассылки этой группы</p>
+<div class="markdown-heading"><h2 class="heading-element">подписчики</h2><a id="user-content-подписчики" class="anchor" aria-label="Permalink: подписчики" href="#подписчики"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<table>
+<thead>
+<tr>
+<th>команда</th>
+<th>что делает</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/subscribers</code></td>
+<td>сколько человек подписано</td>
+</tr>
+<tr>
+<td><code>/find @ник</code></td>
+<td>подписан ли человек и с какого числа</td>
+</tr>
+<tr>
+<td><code>/invite</code></td>
+<td>ссылка-приглашение</td>
+</tr>
+<tr>
+<td><code>/invite vk</code></td>
+<td>ссылка с меткой, чтобы видеть, откуда пришли подписчики</td>
+</tr>
+</tbody>
+</table>
+<div class="markdown-heading"><h2 class="heading-element">что важно помнить</h2><a id="user-content-что-важно-помнить" class="anchor" aria-label="Permalink: что важно помнить" href="#что-важно-помнить"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
 <ul>
-<li>
-<code>/groups</code> — список групп.</li>
-<li>
-<code>/group #vip</code> — кто в группе.</li>
-<li>
-<code>/group #vip @anna @boris</code> — добавить в группу; если группы нет, она создастся.</li>
-<li>
-<code>/group_remove #vip @anna</code> — убрать из группы.</li>
-<li>
-<code>/group_delete #vip</code> — удалить группу.</li>
+<li>рассылку получают только подписчики - те, кто нажал "Старт" у бота. первым написать человеку бот не может, так что скиньте ему ссылку из <code>/invite</code>
+</li>
+<li>каждый получает рассылку один раз, даже если состоит в нескольких группах</li>
+<li>кто заблокировал бота или отправил <code>/stop</code>, рассылки больше не получает</li>
 </ul>
-<p>В группу можно добавить ник того, кто ещё не подписан: после «Старта» он начнёт получать рассылки этой группы.</p>
-<div class="markdown-heading"><h2 class="heading-element">Подписчики</h2><a id="user-content-подписчики" class="anchor" aria-label="Permalink: Подписчики" href="#подписчики"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 class="heading-element">для администратора</h2><a id="user-content-для-администратора" class="anchor" aria-label="Permalink: для администратора" href="#для-администратора"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
 <ul>
 <li>
-<code>/subscribers</code> — сколько человек подписано.</li>
+<code>/operators</code> - список операторов: "Выбрать из чатов" - добавить, "Убрать" - убрать</li>
 <li>
-<code>/find @ник</code> — подписан ли человек и с какого числа.</li>
-<li>
-<code>/invite</code> — ссылка-приглашение. <code>/invite vk</code> — ссылка с меткой, чтобы видеть, откуда пришли подписчики.</li>
-</ul>
-<div class="markdown-heading"><h2 class="heading-element">Важно</h2><a id="user-content-важно" class="anchor" aria-label="Permalink: Важно" href="#важно"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
-<ul>
-<li>Сообщения получают только подписчики — те, кто нажал «Старт» у бота. Написать человеку первым бот не может: пришлите ему ссылку из <code>/invite</code>.</li>
-<li>Каждый получает рассылку один раз, даже если состоит в нескольких группах.</li>
-<li>Кто заблокировал бота или отправил <code>/stop</code>, рассылок больше не получает.</li>
-</ul>
-<div class="markdown-heading"><h2 class="heading-element">Для администратора</h2><a id="user-content-для-администратора" class="anchor" aria-label="Permalink: Для администратора" href="#для-администратора"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
-<ul>
-<li>
-<code>/operators</code> — список операторов: «Выбрать из чатов» — добавить, «Убрать» — убрать.</li>
-<li>
-<code>/operator @ник</code> или <code>/operator ID</code> — добавить оператора без кнопки, если человек уже писал боту.</li>
+<code>/operator @ник</code> или <code>/operator ID</code> - добавить оператора без кнопок (сработает, если человек уже писал боту)</li>
 </ul>
 </main>
 </body>
