@@ -5,75 +5,122 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1923" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex">
 <title>как работать с ботом рассылок</title>
 <meta property="og:title" content="как работать с ботом рассылок">
 <meta name="description" content="Инструкция для операторов бота рассылок @sabsc_bot.">
 <style>
+  /* Акцент — синий Telegram: оператор приходит сюда из Telegram. Одна роль: то, на что нажимают.
+     Янтарный — только для предупреждений. Контраст текста — не ниже 4,5:1 в обеих темах. */
   :root {
-    --bg: #ffffff;
-    --text: #1f2328;
-    --border: #d1d9e0;
-    --code-bg: #eff2f5;
-    --link: #0969da;
+    --ground: #ffffff;
+    --raised: #eef3f7;
+    --ink: #15202b;
+    --ink-2: #526372;
+    --rule: #d5dee6;
+    --accent: #1670a8;
+    --accent-fill: #2aabee;
+    --tip-bg: #e9f5fc;
+    --warn: #d18b00;
+    --warn-ink: #7a4b00;
+    --warn-bg: #fdf3dc;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0d1117;
-      --text: #e6edf3;
-      --border: #3d444d;
-      --code-bg: #262c36;
-      --link: #4493f8;
+      --ground: #0f1923;
+      --raised: #192734;
+      --ink: #e6edf3;
+      --ink-2: #9fb1c2;
+      --rule: #2a3b4c;
+      --accent: #5cb6ef;
+      --accent-fill: #2aabee;
+      --tip-bg: #12293a;
+      --warn: #e0a43a;
+      --warn-ink: #f0c46a;
+      --warn-bg: #2b2213;
     }
   }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--ground);
+    color: var(--ink);
+    font: 17px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
-  main { max-width: 42rem; margin: 0 auto; padding: 20px 16px 48px; }
-  h1 { font-size: 1.6em; line-height: 1.25; margin: 0.3em 0 0.7em; }
-  h2 { font-size: 1.25em; line-height: 1.3; margin: 1.7em 0 0.6em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border); }
-  p, ul, ol { margin: 0 0 0.9em; }
+  main { max-width: 42rem; margin: 0 auto; padding: 32px 16px 64px; }
+
+  /* Шрифты: 34 — заголовок страницы, 21 — разделы, 17 — текст, 15 — команды и оглавление. */
+  h1 { font-size: 34px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; text-wrap: balance; }
+  h2 { font-size: 21px; line-height: 1.25; font-weight: 700; margin: 40px 0 12px; scroll-margin-top: 16px; }
+  p, ul, ol { margin: 0 0 12px; }
   ul, ol { padding-left: 1.4em; }
-  li { margin: 0.35em 0; }
-  li > ul, li > ol { margin: 0.35em 0 0; }
+  li { margin: 6px 0; }
+  li > ul, li > ol { margin: 6px 0 0; }
+  a { color: var(--accent); text-underline-offset: 2px; }
   code {
-    font: 0.88em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    background: var(--code-bg);
-    padding: 0.12em 0.35em;
-    border-radius: 4px;
+    font: 15px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--raised);
+    padding: 1px 6px;
+    border-radius: 6px;
     /* break-word, а не anywhere: в таблице anywhere сжимает столбец и рвёт команды посреди слова. */
     overflow-wrap: break-word;
   }
-  a { color: var(--link); }
-  table { width: 100%; border-collapse: collapse; margin: 0 0 1em; }
-  th, td { border: 1px solid var(--border); padding: 0.4em 0.6em; text-align: left; vertical-align: top; }
-  th { background: var(--code-bg); font-weight: 600; }
-  /* Цитата в инструкции — то, что нельзя пропустить. */
-  blockquote { margin: 0 0 1em; padding: 0.6em 0.9em; border-left: 4px solid var(--link); background: var(--code-bg); border-radius: 0 6px 6px 0; }
+
+  /* Оглавление собирает скрипт из разделов «##»: строка ссылок, а не кнопки, чтобы не спорить с главным блоком. */
+  .toc { display: flex; flex-wrap: wrap; gap: 2px 18px; margin: 20px 0 0; font-size: 15px; line-height: 2.1; }
+  .toc a {
+    color: var(--accent); white-space: nowrap;
+    text-decoration: underline 1px; text-underline-offset: 4px;
+    text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 16px; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--raised); font-size: 15px; font-weight: 600; color: var(--ink-2); }
+
+  /* Цитаты. Метка в первой строке задаёт роль: tip — главное, note — подсказка, warning — важно. */
+  blockquote { margin: 0 0 16px; padding: 12px 16px; border-left: 4px solid var(--rule); background: var(--raised); border-radius: 0 10px 10px 0; }
   blockquote p { margin: 0; }
-  /* Значок ссылки на раздел, который добавляет Markdown API GitHub: без скриптов GitHub он не работает. */
-  .anchor { display: none; }
+  .callout-tip { border-left-color: var(--accent-fill); background: var(--tip-bg); font-size: 19px; line-height: 1.45; padding: 16px; }
+  .callout-tip code { background: var(--ground); }
+  .callout-note { background: none; border-left-width: 3px; padding: 2px 0 2px 14px; color: var(--ink-2); }
+  .callout-warning, .callout-caution, .callout-important { border-left-color: var(--warn); background: var(--warn-bg); }
+  .callout-warning::before, .callout-caution::before, .callout-important::before {
+    content: "важно"; display: block; margin-bottom: 4px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--warn-ink);
+  }
 </style>
 </head>
 <body>
 <main>
-<div class="markdown-heading"><h1 class="heading-element">как работать с ботом рассылок</h1><a id="user-content-как-работать-с-ботом-рассылок" class="anchor" aria-label="Permalink: как работать с ботом рассылок" href="#как-работать-с-ботом-рассылок"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h1 id="как-работать-с-ботом-рассылок" class="heading-element">как работать с ботом рассылок</h1></div>
 <p>бот - <a href="https://t.me/sabsc_bot" rel="nofollow">@sabsc_bot</a>. всё делается в личке с ним: команды лежат в меню <code>/</code> у поля ввода, решения - кнопками под сообщениями бота</p>
-<p>самое частое в одну строку: <code>/broadcast</code> -&gt; сообщение -&gt; получатели -&gt; "Отправить"</p>
-<blockquote>
-<p>забыли, как что работает - отправьте боту <code>/help</code>, он пришлёт ссылку на эту страницу</p>
+<blockquote class="callout callout-tip">
+<p>
+самое частое в одну строку: <code>/broadcast</code> -&gt; сообщение -&gt; получатели -&gt; "Отправить"</p>
 </blockquote>
-<div class="markdown-heading"><h2 class="heading-element">с чего начать</h2><a id="user-content-с-чего-начать" class="anchor" aria-label="Permalink: с чего начать" href="#с-чего-начать"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<blockquote class="callout callout-note">
+<p>
+забыли, как что работает - отправьте боту <code>/help</code>, он пришлёт ссылку на эту страницу</p>
+</blockquote>
+<nav class="toc" aria-label="разделы">
+<a href="#с-чего-начать">с чего начать</a>
+<a href="#рассылка">рассылка</a>
+<a href="#отложенная-рассылка">отложенная рассылка</a>
+<a href="#группы">группы</a>
+<a href="#подписчики">подписчики</a>
+<a href="#что-важно-помнить">что важно помнить</a>
+<a href="#для-администратора">для администратора</a>
+</nav>
+<div class="markdown-heading"><h2 id="с-чего-начать" class="heading-element">с чего начать</h2></div>
 <ol>
 <li>администратор добавляет вас оператором</li>
 <li>открываете @sabsc_bot и жмёте "Старт" - в меню <code>/</code> появятся команды оператора</li>
 <li>команд нет - закройте чат и откройте заново</li>
 </ol>
-<div class="markdown-heading"><h2 class="heading-element">рассылка</h2><a id="user-content-рассылка" class="anchor" aria-label="Permalink: рассылка" href="#рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 id="рассылка" class="heading-element">рассылка</h2></div>
 <ol>
 <li>отправьте <code>/broadcast</code>
 </li>
@@ -100,7 +147,7 @@
 <li>после отправки придёт отчёт: сколько доставлено и почему кому-то не дошло</li>
 </ol>
 <p>передумали на любом шаге - <code>/cancel</code></p>
-<div class="markdown-heading"><h2 class="heading-element">отложенная рассылка</h2><a id="user-content-отложенная-рассылка" class="anchor" aria-label="Permalink: отложенная рассылка" href="#отложенная-рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 id="отложенная-рассылка" class="heading-element">отложенная рассылка</h2></div>
 <p>после "Запланировать" выберите быстрый вариант или напишите время по москве:</p>
 <ul>
 <li>
@@ -109,10 +156,11 @@
 <code>16.10 18:30</code> - другой день</li>
 </ul>
 <p>все запланированные рассылки лежат в <code>/scheduled</code>, у каждой есть кнопки "Предпросмотр", "Изменить время" и "Отмена". управлять ими может любой оператор</p>
-<blockquote>
-<p>не удаляйте исходное сообщение до отправки - без него рассылка не уйдёт (бот об этом сообщит)</p>
+<blockquote class="callout callout-warning">
+<p>
+не удаляйте исходное сообщение до отправки - без него рассылка не уйдёт (бот об этом сообщит)</p>
 </blockquote>
-<div class="markdown-heading"><h2 class="heading-element">группы</h2><a id="user-content-группы" class="anchor" aria-label="Permalink: группы" href="#группы"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 id="группы" class="heading-element">группы</h2></div>
 <table>
 <thead>
 <tr>
@@ -144,7 +192,7 @@
 </tbody>
 </table>
 <p>в группу можно добавить по нику даже того, кто ещё не подписан - после "Старта" он начнёт получать рассылки этой группы</p>
-<div class="markdown-heading"><h2 class="heading-element">подписчики</h2><a id="user-content-подписчики" class="anchor" aria-label="Permalink: подписчики" href="#подписчики"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 id="подписчики" class="heading-element">подписчики</h2></div>
 <table>
 <thead>
 <tr>
@@ -171,14 +219,14 @@
 </tr>
 </tbody>
 </table>
-<div class="markdown-heading"><h2 class="heading-element">что важно помнить</h2><a id="user-content-что-важно-помнить" class="anchor" aria-label="Permalink: что важно помнить" href="#что-важно-помнить"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 id="что-важно-помнить" class="heading-element">что важно помнить</h2></div>
 <ul>
 <li>рассылку получают только подписчики - те, кто нажал "Старт" у бота. первым написать человеку бот не может, так что скиньте ему ссылку из <code>/invite</code>
 </li>
 <li>каждый получает рассылку один раз, даже если состоит в нескольких группах</li>
 <li>кто заблокировал бота или отправил <code>/stop</code>, рассылки больше не получает</li>
 </ul>
-<div class="markdown-heading"><h2 class="heading-element">для администратора</h2><a id="user-content-для-администратора" class="anchor" aria-label="Permalink: для администратора" href="#для-администратора"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="markdown-heading"><h2 id="для-администратора" class="heading-element">для администратора</h2></div>
 <ul>
 <li>
 <code>/operators</code> - список операторов: "Выбрать из чатов" - добавить, "Убрать" - убрать</li>
