@@ -1,0 +1,127 @@
+<!doctype html>
+<!-- Шаблон страницы-инструкции оператора; собирает scripts/operator-page.sh. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Как работать с ботом рассылок</title>
+<meta property="og:title" content="Как работать с ботом рассылок">
+<meta name="description" content="Инструкция для операторов бота рассылок @sabsc_bot.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1f2328;
+    --border: #d1d9e0;
+    --code-bg: #eff2f5;
+    --link: #0969da;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --text: #e6edf3;
+      --border: #3d444d;
+      --code-bg: #262c36;
+      --link: #4493f8;
+    }
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  main { max-width: 42rem; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0.3em 0 0.7em; }
+  h2 { font-size: 1.25em; line-height: 1.3; margin: 1.7em 0 0.6em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border); }
+  p, ul, ol { margin: 0 0 0.9em; }
+  ul, ol { padding-left: 1.4em; }
+  li { margin: 0.35em 0; }
+  li > ul, li > ol { margin: 0.35em 0 0; }
+  code {
+    font: 0.88em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--code-bg);
+    padding: 0.12em 0.35em;
+    border-radius: 4px;
+    overflow-wrap: anywhere;
+  }
+  a { color: var(--link); }
+  /* Значок ссылки на раздел, который добавляет Markdown API GitHub: без скриптов GitHub он не работает. */
+  .anchor { display: none; }
+</style>
+</head>
+<body>
+<main>
+<div class="markdown-heading"><h1 class="heading-element">Как работать с ботом рассылок</h1><a id="user-content-как-работать-с-ботом-рассылок" class="anchor" aria-label="Permalink: Как работать с ботом рассылок" href="#как-работать-с-ботом-рассылок"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Бот — @sabsc_bot. Всё делается в личном чате с ним: команды — в меню «/» у поля ввода, решения — кнопками под сообщениями бота.</p>
+<div class="markdown-heading"><h2 class="heading-element">Начало</h2><a id="user-content-начало" class="anchor" aria-label="Permalink: Начало" href="#начало"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ol>
+<li>Администратор добавляет вас оператором.</li>
+<li>Откройте @sabsc_bot и нажмите «Старт». В меню «/» появятся команды оператора. Если их нет, закройте и снова откройте чат.</li>
+<li>Эта инструкция всегда под рукой: <code>/help</code> присылает ссылку на неё.</li>
+</ol>
+<div class="markdown-heading"><h2 class="heading-element">Рассылка</h2><a id="user-content-рассылка" class="anchor" aria-label="Permalink: Рассылка" href="#рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ol>
+<li>Отправьте <code>/broadcast</code>.</li>
+<li>Пришлите сообщение так, как написали бы его в Telegram: текст с форматированием и эмодзи, фото, видео, файл, голосовое или альбом.</li>
+<li>Напишите получателей через пробел: <code>@ник</code>, ID, <code>#группа</code> или <code>all</code> — все подписчики. Например: <code>@ivan #vip</code>.</li>
+<li>Проверьте сводку: сколько получателей и кто не подписан. Неподписанным отправьте ссылку-приглашение из сводки.</li>
+<li>Нажмите кнопку:
+<ul>
+<li>«Предпросмотр» — как сообщение увидят получатели;</li>
+<li>«Отправить» — сразу;</li>
+<li>«Запланировать» — к нужному времени;</li>
+<li>«Отмена».</li>
+</ul>
+</li>
+<li>После отправки придёт отчёт: сколько доставлено и почему кому-то нет.</li>
+</ol>
+<p>Передумали на любом шаге — отправьте <code>/cancel</code>.</p>
+<div class="markdown-heading"><h2 class="heading-element">Отложенная рассылка</h2><a id="user-content-отложенная-рассылка" class="anchor" aria-label="Permalink: Отложенная рассылка" href="#отложенная-рассылка"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>После «Запланировать» выберите быстрый вариант или напишите время по Москве: <code>18:30</code> — сегодня, <code>16.10 18:30</code> — другой день.</li>
+<li>
+<code>/scheduled</code> — все запланированные рассылки с кнопками «Предпросмотр», «Изменить время», «Отменить». Управлять ими может любой оператор.</li>
+<li>Не удаляйте исходное сообщение до отправки: без него рассылка не уйдёт, и бот об этом сообщит.</li>
+</ul>
+<div class="markdown-heading"><h2 class="heading-element">Группы</h2><a id="user-content-группы" class="anchor" aria-label="Permalink: Группы" href="#группы"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>
+<code>/groups</code> — список групп.</li>
+<li>
+<code>/group #vip</code> — кто в группе.</li>
+<li>
+<code>/group #vip @anna @boris</code> — добавить в группу; если группы нет, она создастся.</li>
+<li>
+<code>/group_remove #vip @anna</code> — убрать из группы.</li>
+<li>
+<code>/group_delete #vip</code> — удалить группу.</li>
+</ul>
+<p>В группу можно добавить ник того, кто ещё не подписан: после «Старта» он начнёт получать рассылки этой группы.</p>
+<div class="markdown-heading"><h2 class="heading-element">Подписчики</h2><a id="user-content-подписчики" class="anchor" aria-label="Permalink: Подписчики" href="#подписчики"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>
+<code>/subscribers</code> — сколько человек подписано.</li>
+<li>
+<code>/find @ник</code> — подписан ли человек и с какого числа.</li>
+<li>
+<code>/invite</code> — ссылка-приглашение. <code>/invite vk</code> — ссылка с меткой, чтобы видеть, откуда пришли подписчики.</li>
+</ul>
+<div class="markdown-heading"><h2 class="heading-element">Важно</h2><a id="user-content-важно" class="anchor" aria-label="Permalink: Важно" href="#важно"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>Сообщения получают только подписчики — те, кто нажал «Старт» у бота. Написать человеку первым бот не может: пришлите ему ссылку из <code>/invite</code>.</li>
+<li>Каждый получает рассылку один раз, даже если состоит в нескольких группах.</li>
+<li>Кто заблокировал бота или отправил <code>/stop</code>, рассылок больше не получает.</li>
+</ul>
+<div class="markdown-heading"><h2 class="heading-element">Для администратора</h2><a id="user-content-для-администратора" class="anchor" aria-label="Permalink: Для администратора" href="#для-администратора"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>
+<code>/operators</code> — список операторов: «Выбрать из чатов» — добавить, «Убрать» — убрать.</li>
+<li>
+<code>/operator @ник</code> или <code>/operator ID</code> — добавить оператора без кнопки, если человек уже писал боту.</li>
+</ul>
+</main>
+</body>
+</html>
