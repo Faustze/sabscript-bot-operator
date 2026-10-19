@@ -91,6 +91,67 @@
     content: "важно"; display: block; margin-bottom: 4px;
     font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--warn-ink);
   }
+
+  /* Шаги — нумерованный список под заголовком раздела (размечает скрипт). Номера нейтральные:
+     акцент остаётся за тем, на что нажимают. Линия между номерами показывает порядок. */
+  ol.steps { list-style: none; padding: 0; margin: 0 0 16px; counter-reset: step; }
+  ol.steps > li { position: relative; margin: 0; padding: 0 0 20px 44px; counter-increment: step; scroll-margin-top: 16px; }
+  ol.steps > li:last-child { padding-bottom: 4px; }
+  ol.steps > li::before {
+    content: counter(step); position: absolute; left: 0; top: -1px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--ink); color: var(--ground);
+    font-size: 15px; font-weight: 700; line-height: 28px; text-align: center;
+  }
+  ol.steps > li:not(:last-child)::after {
+    content: ""; position: absolute; left: 13px; top: 33px; bottom: 6px; width: 2px; border-radius: 1px; background: var(--rule);
+  }
+  .step-title { display: block; line-height: 26px; }
+  ol.steps ul { margin-top: 8px; }
+
+  /* Схема — заголовки шагов в одну строку со ссылками на шаги. На узком экране её заменяет столбик шагов. */
+  .flow { display: none; }
+  @media (min-width: 560px) {
+    .flow { display: flex; list-style: none; padding: 0; margin: 4px 0 24px; counter-reset: flow; }
+    .flow li { position: relative; flex: 1 1 0; margin: 0; counter-increment: flow; text-align: center; font-size: 15px; line-height: 1.3; }
+    .flow li::before {
+      content: counter(flow); position: relative; z-index: 1; display: block;
+      width: 24px; height: 24px; margin: 0 auto 6px; border-radius: 50%; box-sizing: border-box;
+      border: 2px solid var(--rule); background: var(--ground); color: var(--ink-2);
+      font-size: 13px; font-weight: 700; line-height: 20px;
+    }
+    .flow li:not(:last-child)::after { content: ""; position: absolute; top: 11px; left: 50%; width: 100%; height: 2px; background: var(--rule); }
+    .flow a { display: inline-block; padding: 2px 4px; text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+  }
+
+  /* Карточки — список, где каждый пункт начинается с кода. Код и то, что до « - », — название карточки. */
+  ul.options {
+    list-style: none; padding: 0; margin: 8px 0 12px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 8px;
+  }
+  ul.options > li { margin: 0; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 10px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+  .option-name { display: block; margin-bottom: 2px; color: var(--ink); font-weight: 600; }
+  .option-name code { font-size: 16px; }
+  ul.options .sep { display: none; }
+
+  /* Копирование команд: кнопки ставит скрипт внизу страницы; без него остаётся текст. */
+  .copy {
+    display: inline-grid; place-items: center; width: 28px; height: 28px; margin: -6px 0 -6px 2px; padding: 0;
+    vertical-align: middle; border: 0; border-radius: 8px; background: none; color: var(--accent); cursor: pointer;
+  }
+  .copy:hover { background: var(--raised); }
+  .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .copy svg { width: 16px; height: 16px; }
+  /* В таблице кнопка — у правого края ячейки: ровный столбец и не переносится под длинной командой. */
+  td.with-copy { position: relative; padding-right: 40px; }
+  td.with-copy > .copy { position: absolute; top: 5px; right: 5px; margin: 0; }
+  .toast {
+    position: fixed; left: 50%; bottom: 20px; z-index: 2; max-width: calc(100vw - 32px); box-sizing: border-box;
+    padding: 8px 14px; border-radius: 10px; background: var(--ink); color: var(--ground);
+    font-size: 15px; transform: translateX(-50%); opacity: 0; pointer-events: none; transition: opacity 0.15s;
+  }
+  .toast.shown { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
 </style>
 </head>
 <body>
@@ -117,28 +178,48 @@
 <a href="#для-администратора">для администратора</a>
 </nav>
 <div class="markdown-heading"><h2 id="с-чего-начать" class="heading-element">с чего начать</h2></div>
-<ol>
-<li>администратор добавляет вас оператором</li>
-<li>открываете @sabsc_bot и жмёте "Старт" - в меню <code>/</code> появятся команды оператора</li>
-<li>команд нет - закройте чат и откройте заново</li>
+<ol class="steps">
+<li id="с-чего-начать-1">администратор добавляет вас оператором</li>
+<li id="с-чего-начать-2">открываете @sabsc_bot и жмёте "Старт" - в меню <code>/</code> появятся команды оператора</li>
+<li id="с-чего-начать-3">команд нет - закройте чат и откройте заново</li>
 </ol>
 <div class="markdown-heading"><h2 id="рассылка" class="heading-element">рассылка</h2></div>
-<ol>
-<li>отправьте <code>/broadcast</code>
+<ol class="flow" aria-label="кратко">
+<li><a href="#рассылка-1">запуск</a></li>
+<li><a href="#рассылка-2">сообщение</a></li>
+<li><a href="#рассылка-3">получатели</a></li>
+<li><a href="#рассылка-4">сводка</a></li>
+<li><a href="#рассылка-5">кнопка</a></li>
+<li><a href="#рассылка-6">отчёт</a></li>
+</ol>
+<ol class="steps">
+<li id="рассылка-1">
+<strong class="step-title">запуск</strong>
+отправьте <code>/broadcast</code>
 </li>
-<li>пришлите сообщение так же, как написали бы его в телеграме: текст с форматированием и эмодзи, фото, видео, файл, голосовое или альбом</li>
-<li>напишите получателей через пробел, например <code>@ivan #vip</code>:
-<ul>
+<li id="рассылка-2">
+<strong class="step-title">сообщение</strong>
+пришлите его так же, как написали бы в телеграме: текст с форматированием и эмодзи, фото, видео, файл, голосовое или альбом</li>
+<li id="рассылка-3">
+<strong class="step-title">получатели</strong>
+напишите их через пробел, например <code>@ivan #vip</code>. получат только подписчики:
+<ul class="options">
 <li>
-<code>@ник</code> или ID - конкретный человек</li>
+<span class="option-name"><code>@ник</code> или ID</span><span class="sep"> - </span>конкретный человек, например <code>@anna</code> или <code>123456789</code>
+</li>
 <li>
-<code>#группа</code> - все из группы</li>
+<span class="option-name"><code>#группа</code></span><span class="sep"> - </span>все из группы, например <code>#vip</code>
+</li>
 <li>
-<code>all</code> - все подписчики</li>
+<span class="option-name"><code>all</code></span><span class="sep"> - </span>все подписчики</li>
 </ul>
 </li>
-<li>проверьте сводку: сколько получателей и кто не подписан. неподписанным скиньте ссылку-приглашение прямо из сводки</li>
-<li>нажмите кнопку:
+<li id="рассылка-4">
+<strong class="step-title">сводка</strong>
+проверьте, сколько получателей и кто не подписан. неподписанным скиньте ссылку-приглашение прямо из сводки</li>
+<li id="рассылка-5">
+<strong class="step-title">кнопка</strong>
+нажмите одну из них:
 <ul>
 <li>"Предпросмотр" - покажет сообщение так, как его увидят получатели</li>
 <li>"Изменить сообщение" - пришлите новое сообщение вместо прежнего: текст, фото, файл или альбом. получатели останутся те же, бот пришлёт новую сводку</li>
@@ -147,7 +228,9 @@
 <li>"Отмена" - ничего не уйдёт</li>
 </ul>
 </li>
-<li>после отправки придёт отчёт: сколько доставлено и почему кому-то не дошло. под ним - кнопки, чтобы исправить или удалить рассылку</li>
+<li id="рассылка-6">
+<strong class="step-title">отчёт</strong>
+после отправки придёт отчёт: сколько доставлено и почему кому-то не дошло. под ним - кнопки, чтобы исправить или удалить рассылку</li>
 </ol>
 <p>передумали на любом шаге - <code>/cancel</code></p>
 <p>у каждой рассылки свой номер, например "Рассылка №12": он есть в сводке, карточке, отчёте и вопросах бота. а в вашем чате бот ещё и отвечает на сам пост - над сообщением бота видно его начало, нажмите на цитату, чтобы перейти к посту</p>
@@ -165,14 +248,29 @@
 </blockquote>
 <p>альбом, стикер или кружок исправить нельзя - только удалить</p>
 <div class="markdown-heading"><h2 id="отложенная-рассылка" class="heading-element">отложенная рассылка</h2></div>
-<p>после "Запланировать" выберите быстрый вариант или напишите время по москве:</p>
-<ul>
+<ol class="flow" aria-label="кратко">
+<li><a href="#отложенная-рассылка-1">время</a></li>
+<li><a href="#отложенная-рассылка-2">проверка</a></li>
+<li><a href="#отложенная-рассылка-3">отправка</a></li>
+</ol>
+<ol class="steps">
+<li id="отложенная-рассылка-1">
+<strong class="step-title">время</strong>
+после "Запланировать" выберите быстрый вариант или напишите время по москве:
+<ul class="options">
 <li>
-<code>18:30</code> - сегодня</li>
+<span class="option-name"><code>18:30</code></span><span class="sep"> - </span>сегодня</li>
 <li>
-<code>16.10 18:30</code> - другой день</li>
+<span class="option-name"><code>16.10 18:30</code></span><span class="sep"> - </span>другой день</li>
 </ul>
-<p>все запланированные рассылки лежат в <code>/scheduled</code>, у каждой есть кнопки "Предпросмотр", "Изменить сообщение", "Изменить время" и "Отмена". управлять ими может любой оператор. заменили сообщение чужой рассылки - отчёт о ней придёт вам</p>
+</li>
+<li id="отложенная-рассылка-2">
+<strong class="step-title">проверка</strong>
+все запланированные рассылки лежат в <code>/scheduled</code>, у каждой есть кнопки "Предпросмотр", "Изменить сообщение", "Изменить время" и "Отмена". управлять ими может любой оператор. заменили сообщение чужой рассылки - отчёт о ней придёт вам</li>
+<li id="отложенная-рассылка-3">
+<strong class="step-title">отправка</strong>
+в назначенное время рассылка уходит сама, потом приходит отчёт. если бот в это время не работал, она уйдёт сразу после запуска, и бот предупредит об опоздании</li>
+</ol>
 <blockquote class="callout callout-warning">
 <p>
 не удаляйте исходное сообщение до отправки - без него рассылка не уйдёт (бот об этом сообщит)</p>
@@ -268,12 +366,85 @@
 </table>
 <p>в <code>/history</code> у каждой рассылки есть кнопка с номером - она открывает карточку: что с рассылкой, кто и что с ней делал, и кнопки. так удалить или исправить рассылку может любой оператор, а не только тот, кто её отправил</p>
 <div class="markdown-heading"><h2 id="для-администратора" class="heading-element">для администратора</h2></div>
-<ul>
+<ul class="options">
 <li>
-<code>/operators</code> - список операторов: "Выбрать из чатов" - добавить, "Убрать" - убрать</li>
+<span class="option-name"><code>/operators</code></span><span class="sep"> - </span>список операторов: "Выбрать из чатов" - добавить, "Убрать" - убрать</li>
 <li>
-<code>/operator @ник</code> или <code>/operator ID</code> - добавить оператора без кнопок (сработает, если человек уже писал боту)</li>
+<span class="option-name"><code>/operator @ник</code> или <code>/operator ID</code></span><span class="sep"> - </span>добавить оператора без кнопок (сработает, если человек уже писал боту)</li>
 </ul>
 </main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+  // Кнопка «скопировать» у команд: в первом столбце таблиц, в названиях карточек и в шагах — там только у команды
+  // в конце строки, а не посреди фразы. Копируется только команда. Без Clipboard API — запасной способ через
+  // выделение; если и он не сработал, команда остаётся выделенной, а подсказка просит скопировать вручную.
+  (() => {
+    const copyIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 3.5v-.5A1.5 1.5 0 0 0 9 1.5H4A1.5 1.5 0 0 0 2.5 3v5A1.5 1.5 0 0 0 4 9.5h.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
+    const doneIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const toast = document.getElementById('toast');
+    let hide;
+
+    const show = (message) => {
+      toast.textContent = message;
+      toast.classList.add('shown');
+      clearTimeout(hide);
+      hide = setTimeout(() => toast.classList.remove('shown'), 2500);
+    };
+
+    const fallback = (text) => {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.append(area);
+      area.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      area.remove();
+      return ok;
+    };
+
+    const copy = async (text, code, button) => {
+      let ok = false;
+      try {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      } catch (e) {
+        ok = fallback(text);
+      }
+      if (!ok) {
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        getSelection().removeAllRanges();
+        getSelection().addRange(range);
+        show('Не скопировалось: команда выделена, скопируйте её вручную');
+        return;
+      }
+      button.innerHTML = doneIcon;
+      setTimeout(() => { button.innerHTML = copyIcon; }, 2000);
+      show('Скопировано: ' + text);
+    };
+
+    const atLineEnd = (code) => {
+      const next = code.nextSibling;
+      return !next || (next.nodeType === Node.TEXT_NODE && next.textContent.trim() === '');
+    };
+
+    for (const code of document.querySelectorAll('td:first-child > code, .option-name > code, ol.steps code')) {
+      const text = code.textContent.trim();
+      if (!text.startsWith('/') || text.length < 2) continue;
+      if (!code.closest('td, .option-name') && !atLineEnd(code)) continue;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'copy';
+      button.title = 'Скопировать';
+      button.setAttribute('aria-label', 'Скопировать ' + text);
+      button.innerHTML = copyIcon;
+      button.addEventListener('click', () => copy(text, code, button));
+      code.after(button);
+      if (code.parentElement.tagName === 'TD') code.parentElement.classList.add('with-copy');
+    }
+  })();
+</script>
 </body>
 </html>
