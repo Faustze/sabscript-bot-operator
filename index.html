@@ -157,7 +157,7 @@
 <body>
 <main>
 <div class="markdown-heading"><h1 id="как-работать-с-ботом-рассылок" class="heading-element">как работать с ботом рассылок</h1></div>
-<p>бот - <a href="https://t.me/sabsc_bot" rel="nofollow">@sabsc_bot</a>. всё делается в личке с ним: команды лежат в меню <code>/</code> у поля ввода, решения - кнопками под сообщениями бота</p>
+<p>бот - <a href="https://t.me/sabsc_bot" rel="nofollow">@sabsc_bot</a>. всё делается в личке с ним: самые нужные команды - кнопками под полем ввода, все команды - в меню <code>/</code> у поля ввода, решения - кнопками под сообщениями бота</p>
 <blockquote class="callout callout-tip">
 <p>
 самое частое в одну строку: <code>/broadcast</code> -&gt; сообщение -&gt; получатели -&gt; "Отправить"</p>
@@ -176,13 +176,14 @@
 <a href="#подписчики">подписчики</a>
 <a href="#что-важно-помнить">что важно помнить</a>
 <a href="#история-и-журнал">история и журнал</a>
+<a href="#кнопки-под-полем-ввода">кнопки под полем ввода</a>
 <a href="#для-администратора">для администратора</a>
 </nav>
 <div class="markdown-heading"><h2 id="с-чего-начать" class="heading-element">с чего начать</h2></div>
 <ol class="steps">
 <li id="с-чего-начать-1">администратор добавляет вас оператором</li>
-<li id="с-чего-начать-2">открываете @sabsc_bot и жмёте "Старт" - в меню <code>/</code> появятся команды оператора</li>
-<li id="с-чего-начать-3">команд нет - закройте чат и откройте заново</li>
+<li id="с-чего-начать-2">открываете @sabsc_bot и жмёте "Старт" - под полем ввода появятся кнопки, а в меню <code>/</code> - команды оператора</li>
+<li id="с-чего-начать-3">кнопок нет - отправьте <code>/buttons</code>, команд в меню нет - закройте чат и откройте заново</li>
 </ol>
 <div class="markdown-heading"><h2 id="рассылка" class="heading-element">рассылка</h2></div>
 <ol class="flow" aria-label="кратко">
@@ -196,7 +197,7 @@
 <ol class="steps">
 <li id="рассылка-1">
 <strong class="step-title">запуск</strong>
-отправьте <code>/broadcast</code>
+нажмите "Новая рассылка" или отправьте <code>/broadcast</code>
 </li>
 <li id="рассылка-2">
 <strong class="step-title">сообщение</strong>
@@ -391,12 +392,63 @@
 </tbody>
 </table>
 <p>в <code>/history</code> у каждой рассылки есть кнопка с номером - она открывает карточку: что с рассылкой, кто и что с ней делал, и кнопки. так удалить или исправить рассылку может любой оператор, а не только тот, кто её отправил</p>
+<div class="markdown-heading"><h2 id="кнопки-под-полем-ввода" class="heading-element">кнопки под полем ввода</h2></div>
+<table>
+<thead>
+<tr>
+<th>кнопка</th>
+<th>что делает</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Новая рассылка</td>
+<td>то же, что <code>/broadcast</code>
+</td>
+</tr>
+<tr>
+<td>Запланированные</td>
+<td>то же, что <code>/scheduled</code>
+</td>
+</tr>
+<tr>
+<td>История</td>
+<td>то же, что <code>/history</code>
+</td>
+</tr>
+<tr>
+<td>Группы</td>
+<td>то же, что <code>/groups</code>
+</td>
+</tr>
+<tr>
+<td>Подписчики</td>
+<td>то же, что <code>/subscribers</code>
+</td>
+</tr>
+<tr>
+<td>Приглашение</td>
+<td>ссылка-приглашение, как <code>/invite</code>
+</td>
+</tr>
+<tr>
+<td>Инструкция</td>
+<td>ссылка на эту страницу, как <code>/help</code>
+</td>
+</tr>
+<tr>
+<td>Скрыть кнопки</td>
+<td>убрать кнопки, вернуть - <code>/buttons</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>команды с параметром - <code>/find @ник</code>, <code>/invite vk</code>, <code>/group #vip @anna</code> - пишутся через <code>/</code>, как раньше</p>
 <div class="markdown-heading"><h2 id="для-администратора" class="heading-element">для администратора</h2></div>
-<ul class="options">
+<ul>
+<li>"Операторы" или <code>/operators</code> - список операторов: "Выбрать из чатов" - добавить, "Убрать" - убрать, "Назад" - вернуть кнопки команд</li>
 <li>
-<span class="option-name"><code>/operators</code></span><span class="sep"> - </span>список операторов: "Выбрать из чатов" - добавить, "Убрать" - убрать</li>
-<li>
-<span class="option-name"><code>/operator @ник</code> или <code>/operator ID</code></span><span class="sep"> - </span>добавить оператора без кнопок (сработает, если человек уже писал боту)</li>
+<code>/operator @ник</code> или <code>/operator ID</code> - добавить оператора без кнопок (сработает, если человек уже писал боту)</li>
 </ul>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
